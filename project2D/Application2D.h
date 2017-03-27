@@ -14,6 +14,11 @@ public:
 		playing,
 		over
 	};
+	enum tile {
+		_,
+		O,
+		X
+	};
 
 
 
@@ -32,15 +37,15 @@ protected:
 
 	aie::Renderer2D *	m_2dRenderer;
 	aie::Font *	m_font;
+	aie::Font *	m_titleFont;
 	float m_cameraX, m_cameraY;
 	float m_timer;
 
 	gameState currentState;
 
-	int ** tttField;
+	tile ** tttField;
 	bool ai;
 	int playerTurn;
-	int difficulty;
 	int p1Score;
 	int p2Score;
 
@@ -54,14 +59,14 @@ protected:
 	Button * buttonCollision(Button ** checkIn, int rows, int col, int x, int y);
 	bool isCollision(Button * checkIn, int x, int y);
 
-	int checkWinner(int ** field);
+	int checkWinner(tile ** field);
 
 	//AI Functions 
 	
-	bool tryWin(int ** field);
-	bool counterWin(int ** field);
-	bool placeInGoodPos(int ** field);
-	bool placeInRandPos(int ** field);
+	bool tryWin(tile ** field);
+	bool counterWin(tile ** field);
+	bool placeInGoodPos(tile ** field);
+	bool placeInRandPos(tile ** field);
 	
 
 };

@@ -1,5 +1,6 @@
 #include "Button.h"
 
+//My button class
 Button::Button()
 {
 
@@ -8,7 +9,6 @@ Button::Button()
 	m_width = 1;
 	m_height = 1;
 	m_text = "";
-	m_tag = "";
 	m_over = false;
 }
 
@@ -19,11 +19,11 @@ Button::Button(int x, int y, int width, int height, std::string text)
 	m_width = width;
 	m_height = height;
 	m_text = text;
-	m_tag = text;
+	
 	m_over = false;
 }
 
-Button::Button(int x, int y, int width, int height, std::string text, std::string tag, int gridX, int gridY)
+Button::Button(int x, int y, int width, int height, std::string text, int gridX, int gridY)
 {
 
 	m_posX = x;
@@ -31,7 +31,6 @@ Button::Button(int x, int y, int width, int height, std::string text, std::strin
 	m_width = width;
 	m_height = height;
 	m_text = text;
-	m_tag = tag;
 	m_over = false;
 	m_gridX = gridX;
 	m_gridY = gridY;
@@ -41,25 +40,31 @@ Button::~Button()
 {
 }
 
-int Button::getPosX()
+void Button::draw(aie::Renderer2D * renderer, aie::Font * font)
 {
-	return m_posX;
+	if(m_over)
+		renderer->setRenderColour(0.7f, 0.7f, 0.7f, 0.5f);
+	else
+		renderer->setRenderColour(0.5f, 0.5f, 0.5f, 0.5f);
+	//Draw with offsets 
+	renderer->drawBox(m_posX + m_width / 2 - 5.0f, m_posY + m_height / 2 - 5.0f, m_width*1.0f, m_height*1.0f, 0.0f);
+	//Text & text colour
+	renderer->setRenderColour(1, 1, 1, 1);
+	//No text
+	if(font != nullptr)
+	renderer->drawText(font, m_text.c_str(),m_posX*1.0f, m_posY*1.0f);
+
 }
 
-int Button::getPosY()
+bool Button::isCollision(int x, int y)
 {
-	return m_posY;
+	//Check if the co-ords are within the bound box
+	if (x >m_posX && x < m_posX + m_width && y >m_posY && y < m_posY + m_height) {
+		return true;
+	}
+	return false;
 }
 
-int Button::getWidth()
-{
-	return m_width;
-}
-
-int Button::getHeight()
-{
-	return m_height;
-}
 
 bool Button::isOver()
 {
@@ -79,11 +84,6 @@ std::string Button::getText()
 void Button::setText(std::string in)
 {
 	m_text = in;
-}
-
-std::string Button::getTag()
-{
-	return m_tag;
 }
 
 int Button::getGridX()
