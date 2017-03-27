@@ -1,2 +1,2 @@
-# Y1CppProjects
+# AIECppTicTacToe
 AIE - C++ Projects 1
